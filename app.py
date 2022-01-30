@@ -5,8 +5,9 @@ from flask import Flask, url_for, render_template, request, redirect, session
 #from flask_sqlalchemy import SQLAlchemy
 import pickle
 import pandas as pd
+import numpy as np
 from sklearn.feature_extraction.text import TfidfTransformer,CountVectorizer
-
+import model
 
 # Create the application.
 app = flask.Flask(__name__)
@@ -22,27 +23,42 @@ def login():
     if request.method == 'GET':
         return render_template('index.html')
     else:
-        name = request.form['username']
+        dur = list(request.form['duration'])
+        day = list(request.form['day'])
+        age = list(request.form['age'])
+        bal = list(request.form['balance'])
+        pday = list(request.form['pdays'])
+        pout = list(request.form['poutcome_success'])
+        cam = list(request.form['campaign'])
+        print(dur) 
         try:
-            d = [{'duration':0, 'day':1, 'age':23, 'balance':2,'pdays':1,'poutcome_success':0,'campaign':1}]
-            data = pd.DataFrame(d)
+            data = pd.DataFrame(columns=['duration','day','age','balance','pdays','poutcome_success','campaign'])
+            lstD = []
+            lstD.append(dur)
+            lstD.append(day)
+            lstD.append(age)
+            lstD.append(bal)
+            lstD.append(pday)
+            lstD.append(pout)
+            lstD.append(cam)
+            print(lstD)
+            lstD = np.transpose(lstD)
+            data = pd.DataFrame(lstD)
             print(data)
             
             if not data.empty:
                 print("here",data)
-                print("inside model",data)
-                model = pickle.load(open('pickle/model.pkl','rb'))
-                print("here in model")
-                predData = model.predict(data)
-                print(predData)
-                return  render_template('view.html',tables=[predData[0]], titles = ['prediction'])
+                result = model.prediction(data)
+                print(result)
+                
+                return  render_template('view.html',tables=[result], titles = ['prediction'])
                
             else:
-                print(name)
+                print(data)
                 return render_template('invalid.html')
 
         except:
-            print(name)
+            print(data)
             return render_template('invalid.html')
 
 
