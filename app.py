@@ -6,7 +6,7 @@ from flask import Flask, url_for, render_template, request, redirect, session
 import pickle
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfTransformer,CountVectorizer
-import model
+
 
 # Create the application.
 app = flask.Flask(__name__)
@@ -30,9 +30,12 @@ def login():
             
             if not data.empty:
                 print("here",data)
-                result = model.prediction(data)
-                print(result)
-                return  render_template('view.html',tables=[result[0]], titles = ['prediction'])
+                print("inside model",data)
+                model = pickle.load(open('pickle/model.pkl','rb'))
+                print("here in model")
+                predData = model.predict(data)
+                print(predData)
+                return  render_template('view.html',tables=[predData[0]], titles = ['prediction'])
                
             else:
                 print(name)
