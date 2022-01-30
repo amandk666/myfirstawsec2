@@ -47,10 +47,13 @@ def login():
             
             if not data.empty:
                 print("here",data)
-                result = model.prediction(data)
+                print("inside model",data)
+                model = pickle.load(open('pickle/model.pkl','rb'))
+                print("here in model")
+                result = model.predict(data)
                 print(result)
                 
-                return  render_template('view.html',tables=[result], titles = ['prediction'])
+                return  render_template('view.html',tables= result, titles = ['prediction'])
                
             else:
                 print(data)
