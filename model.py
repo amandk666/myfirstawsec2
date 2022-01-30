@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings('ignore')
 #from google.colab import drive
-pip install imblearn
+#pip install imblearn
 from sklearn.ensemble import ExtraTreesClassifier
 from imblearn.over_sampling import RandomOverSampler
 from imblearn.under_sampling import RandomUnderSampler
