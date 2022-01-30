@@ -7,7 +7,6 @@ import pickle
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfTransformer,CountVectorizer
-import model
 
 # Create the application.
 app = flask.Flask(__name__)
