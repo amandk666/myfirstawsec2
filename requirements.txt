@@ -12,5 +12,5 @@ pandas>=0.19
 
 Flask-SQLAlchemy
 requests
-imblearn>=0.9.0
+imblearn>=0.0
 model
