@@ -22,27 +22,23 @@ def login():
     if request.method == 'GET':
         return render_template('index.html')
     else:
-        dur = list(request.form['duration'])
-        day = list(request.form['day'])
-        age = list(request.form['age'])
-        bal = list(request.form['balance'])
-        pday = list(request.form['pdays'])
-        pout = list(request.form['poutcome_success'])
-        cam = list(request.form['campaign'])
-        print(dur) 
+        incData = []
+        dur = request.form['duration']
+        day = request.form['day']
+        age = request.form['age']
+        bal = request.form['balance']
+        pday =request.form['pdays']
+        pout =request.form['poutcome_success']
+        cam = request.form['campaign']
+        input = [dur, day, age, bal, pday, pout, cam]
+        for item in input:
+          items = item.split(',')
+          incData.append(items)
+        print(incData)
         try:
             data = pd.DataFrame(columns=['duration','day','age','balance','pdays','poutcome_success','campaign'])
-            lstD = []
-            lstD.append(dur)
-            lstD.append(day)
-            lstD.append(age)
-            lstD.append(bal)
-            lstD.append(pday)
-            lstD.append(pout)
-            lstD.append(cam)
-            print(lstD)
-            lstD = np.transpose(lstD)
-            data = pd.DataFrame(lstD)
+            incData = np.transpose(incData)
+            data = pd.DataFrame(incData)
             print(data)
             
             if not data.empty:
